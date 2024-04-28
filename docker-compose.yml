@@ -1,0 +1,18 @@
+# docker-compose.yml for local dev
+
+version: "3.8"
+services:
+  db:
+    image: postgres:15.4
+    container_name: lc-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - lc-postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=$DB_NAME
+      - POSTGRES_USER=$DB_USERNAME
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+      - TZ=Asia/Singapore
+volumes:
+  lc-postgres:
