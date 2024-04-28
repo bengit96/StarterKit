@@ -1,0 +1,31 @@
+{
+  "name": "starter-kit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "all": "concurrently -c green,blue",
+    "on-backend": "npm run --prefix backend",
+    "on-frontend": "npm run --prefix frontend",
+    "dev": "npm run --prefix shared build && npm run all \"docker-compose --env-file ./backend/.env up\" \"npm:on-* dev\"",
+    "dev:db": "docker-compose --env-file ./backend/.env up",
+    "dev:app": "npm run --prefix shared build && npm run all \"npm:on-* dev\"",
+    "postinstall": "npm install --prefix backend && npm install --prefix frontend && npm install --prefix shared && rm -rf $(find . -type d -path \"**/resolve/test\" -maxdepth 10)",
+    "prepare": "husky",
+    "build": "npm run --prefix shared build && npm run all \"npm:on-* build\"",
+    "lint": "npm run all \"npm:on-* lint\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "concurrently": "^8.2.2",
+    "prettier": "^2.8.8"
+  },
+  "dependencies": {
+    "@nestjs/typeorm": "^10.0.2",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.2"
+  }
+}
